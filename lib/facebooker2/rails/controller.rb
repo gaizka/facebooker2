@@ -100,7 +100,9 @@ module Facebooker2
       
       # compute the md5 sig based on access_token,expires,uid, and the app secret
       def generate_signature(hash,secret)
-        sorted_keys = hash.keys.reject {|k| k=="sig"}.sort
+        # sig_hash from #fetch_client_and_user_from_signed_request uses only
+        # these 3 keys from the hash
+        sorted_keys = hash.keys.select{ |k| ["uid", "access_token", "expires"].include?(k)}.sort
         test_string = ""
         sorted_keys.each do |key|
           test_string += "#{key}=#{hash[key]}"

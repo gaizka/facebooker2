@@ -13,7 +13,7 @@ describe Facebooker2::Rails::Controller do
   let :controller do
     controller = FakeController.new
     controller.stub!(:params).and_return({})
-    controller.stub!(:cookies).and_return("fbs_12345"=>"\"access_token=114355055262088|57f0206b01ad48bf84ac86f1-12451752|63WyZjRQbzowpN8ibdIfrsg80OA.&expires=0&secret=1e3375dcc4527e7ead0f82c095421690&session_key=57f0206b01ad48bf84ac86f1-12451752&sig=4337fcdee4cc68bb70ec495c0eebf89c&uid=12451752\"")
+    controller.stub!(:cookies).and_return("fbs_12345"=>"\"access_token=114355055262088|57f0206b01ad48bf84ac86f1-12451752|63WyZjRQbzowpN8ibdIfrsg80OA.&expires=0&secret=1e3375dcc4527e7ead0f82c095421690&session_key=57f0206b01ad48bf84ac86f1-12451752&sig=465b7c5c3f84200c459b03330898112e&uid=12451752\"")
     controller
   end
   
@@ -77,7 +77,7 @@ describe Facebooker2::Rails::Controller do
         "secret"            =>  "1e3375dcc4527e7ead0f82c095421690",
         "session_key"       =>  "57f0206b01ad48bf84ac86f1-12451752",
         "uid"               =>  "12451752",
-        "sig"               =>  "4337fcdee4cc68bb70ec495c0eebf89c"},
+        "sig"               =>  "465b7c5c3f84200c459b03330898112e"},
         "42ca6de519d53f6e0420247a4d108d90"
         ).should be_true
     end
@@ -89,7 +89,7 @@ describe Facebooker2::Rails::Controller do
         "secret"            =>  "1e3375dcc4527e7ead0f82c095421690",
         "session_key"       =>  "57f0206b01ad48bf84ac86f1-12451752",
         "uid"               =>  "5436785463785",
-        "sig"               =>  "4337fcdee4cc68bb70ec495c0eebf89c"},
+        "sig"               =>  "465b7c5c3f84200c459b03330898112e"},
         "42ca6de519d53f6e0420247a4d108d90"
         ).should be_false
       
@@ -100,7 +100,7 @@ describe Facebooker2::Rails::Controller do
       controller.set_fb_cookie(nil,
                               Time.now,
                               "5436785463785",
-                              "4337fcdee4cc68bb70ec495c0eebf89c").should be_nil
+                              "465b7c5c3f84200c459b03330898112e").should be_nil
       controller.fb_cookie.should be_nil
     end
 
@@ -109,23 +109,23 @@ describe Facebooker2::Rails::Controller do
       controller.set_fb_cookie("114355055262088|57f0206b01ad48bf84ac86f1-12451752|63WyZjRQbzowpN8ibdIfrsg80OA.",
                                tn,
                                "5436785463785",
-                               "4337fcdee4cc68bb70ec495c0eebf89c").should be_true
-     controller.fb_cookie[:value].should == "\"session_key=57f0206b01ad48bf84ac86f1-12451752&expires=#{tn.to_i}&uid=5436785463785&sig=4337fcdee4cc68bb70ec495c0eebf89c&secret=1e3375dcc4527e7ead0f82c095421690&access_token=114355055262088|57f0206b01ad48bf84ac86f1-12451752|63WyZjRQbzowpN8ibdIfrsg80OA.\""
+                               "465b7c5c3f84200c459b03330898112e").should be_true
+     controller.fb_cookie[:value].should == "\"session_key=57f0206b01ad48bf84ac86f1-12451752&expires=#{tn.to_i}&uid=5436785463785&sig=465b7c5c3f84200c459b03330898112e&secret=1e3375dcc4527e7ead0f82c095421690&access_token=114355055262088|57f0206b01ad48bf84ac86f1-12451752|63WyZjRQbzowpN8ibdIfrsg80OA.\""
     end
 
     it "sets a cookie with an expires value of 0 if the access token expires value is far in the future" do
       controller.set_fb_cookie("114355055262088|57f0206b01ad48bf84ac86f1-12451752|63WyZjRQbzowpN8ibdIfrsg80OA.",
                                Time.now+2.year,
                                "5436785463785",
-                               "4337fcdee4cc68bb70ec495c0eebf89c").should be_true
-     controller.fb_cookie[:value].should == "\"session_key=57f0206b01ad48bf84ac86f1-12451752&expires=0&uid=5436785463785&sig=4337fcdee4cc68bb70ec495c0eebf89c&secret=1e3375dcc4527e7ead0f82c095421690&access_token=114355055262088|57f0206b01ad48bf84ac86f1-12451752|63WyZjRQbzowpN8ibdIfrsg80OA.\""
+                               "465b7c5c3f84200c459b03330898112e").should be_true
+     controller.fb_cookie[:value].should == "\"session_key=57f0206b01ad48bf84ac86f1-12451752&expires=0&uid=5436785463785&sig=465b7c5c3f84200c459b03330898112e&secret=1e3375dcc4527e7ead0f82c095421690&access_token=114355055262088|57f0206b01ad48bf84ac86f1-12451752|63WyZjRQbzowpN8ibdIfrsg80OA.\""
     end
 
    it "sets a cookie with the value deleted if the access token is nil" do
      controller.set_fb_cookie(nil,
                               Time.now,
                               "5436785463785",
-                              "4337fcdee4cc68bb70ec495c0eebf89c").should be_true
+                              "465b7c5c3f84200c459b03330898112e").should be_true
      controller.fb_cookie[:value].should == "deleted"
    end
   end
