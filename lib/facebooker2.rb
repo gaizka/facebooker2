@@ -3,7 +3,6 @@ require "mogli"
 module Facebooker2
 
   @oauth2 = false
-  @cookie_prefix = 'fbs_'
 
   class NotConfigured < Exception; end
   class << self
@@ -26,7 +25,7 @@ module Facebooker2
     self.api_key = hash[:api_key]
     self.secret = hash[:secret]
     self.app_id = hash[:app_id]
-    self.cookie_prefix = 'fbsr_' unless hash[:oauth2].blank?
+    self.cookie_prefix = hash[:cookie_prefix] || hash[:oauth2].blank? ? 'fbs_' : 'fbsr_'
     self.oauth2 = hash[:oauth2].blank? ? false : true
   end
   
