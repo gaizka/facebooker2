@@ -218,6 +218,7 @@ module Facebooker2
 
       def oauth2_fetch_client_and_user
         return if @_fb_user_fetched
+        sig = fetch_client_and_user_from_signed_request
         sig = oauth2_fetch_client_and_user_from_cookie if @_current_facebook_client.nil?
         @_fb_user_fetched = true
       end
